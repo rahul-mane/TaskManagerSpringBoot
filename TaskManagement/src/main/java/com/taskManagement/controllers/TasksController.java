@@ -7,8 +7,11 @@ import java.util.Optional;import javax.xml.ws.http.HTTPBinding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +26,7 @@ import com.taskManagement.entities.TaskStates;
 import com.taskManagement.repositories.TaskRepository;
 import com.taskManagement.validators.TaskValidator;
 
+@Controller
 @RestController
 @RequestMapping(path="/tasks") // This means URL's will start with /tasks after application path
 public class TasksController {
@@ -79,14 +83,17 @@ public class TasksController {
 	
 	//GET : List of all task
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<?> getAllTasks(@RequestParam(value="state",defaultValue="ALL") String state){
+	public ResponseEntity<?> getAllTasks(@RequestParam(value="state",defaultValue="ALL") String state,org.springframework.data.domain.Pageable pageable){
 		List<Task>  tasks;
 		if(state.equalsIgnoreCase("ALL")) {
-			tasks = (List<Task>) taskRepository.findAll();
+			//tasks = (List<Task>) taskRepository.findAll();
+			Page<Task> page = taskRepository.findAll(pageable);
+			tasks = page.getContent();
 		}
 		else {
 			TaskStates passedState = TaskStates.valueOf(state);
 			tasks = (List<Task>) taskRepository.findByState(passedState);
+			
 		}
 		
 		
