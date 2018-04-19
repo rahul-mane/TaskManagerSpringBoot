@@ -11,7 +11,6 @@ import org.springframework.data.repository.query.Param;
 import com.taskManagement.entities.Task;
 import com.taskManagement.entities.TaskStates;
 
-public interface TaskRepository extends PagingAndSortingRepository<Task, Long>  {
+public interface TaskRepository extends PagingAndSortingRepository<Task, Long> {
 	public Iterable<Task> findByState(@Param("state") TaskStates state);
-	
 }
