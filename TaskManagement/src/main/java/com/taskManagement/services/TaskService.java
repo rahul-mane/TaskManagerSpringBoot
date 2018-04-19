@@ -28,7 +28,7 @@ public class TaskService {
 
 	public void update(long id, Task task) throws TaskExceptions {
 		Optional<Task> optionalTask = taskRepository.findById(id);
-		if (optionalTask.isPresent() == false) {
+		if (!optionalTask.isPresent()) {
 			throw new TaskExceptions("Task not found");
 		}
 

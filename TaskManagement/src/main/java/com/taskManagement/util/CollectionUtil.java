@@ -13,13 +13,13 @@ public class CollectionUtil {
 			i++;
 		return i;
 	}
-		 
-	public static <T extends Enum<T>> boolean enumContains(Class<T> enumerator, String value){
-	    for (T c : enumerator.getEnumConstants()) {
-	        if (c.name().equals(value)) {
-	            return true;
-	        }
-	    }
-	    return false;
+
+	public static <T extends Enum<T>> boolean enumContains(Class<T> enumerator, String value) {
+		for (T c : enumerator.getEnumConstants()) {
+			if (c.name().equals(value)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
